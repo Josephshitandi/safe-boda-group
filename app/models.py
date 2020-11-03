@@ -20,7 +20,7 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(255))
-    comments = db.relationship('Comment', backref='username', lazy=True)
+    # comments = db.relationship('Comment', backref='username', lazy=True)
     
     @property
     def password(self):
@@ -44,7 +44,7 @@ class Book(db.Model):
     first_point = db.Column(db.String(255), index=True)
     second_point = db.Column(db.String(255), index=True)
     payment = db.Column(db.String(255), index=True)
-    mobile = db.Column(db.Integer(255), index=True)
+    mobile = db.Column(db.String(255), index=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
@@ -66,3 +66,15 @@ class Book(db.Model):
 
     def __repr__(self):
         return f'Bookings {self._title}'
+    
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255))
+    users = db.relationship('User',backref = 'role',lazy="dynamic")
+    
+
+    def __repr__(self):
+        return f'User {self.name}'
+
