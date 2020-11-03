@@ -8,8 +8,5 @@ class UpdateProfile(FlaskForm):
     submit = SubmitField('Submit')
     
     
-class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment')
-    submit = SubmitField('Post a comment')
     
     
