@@ -1,0 +1,158 @@
+.navbar{
+    border-bottom: 1px solid #CB2A3A;
+    background-color: #FDFDFD;
+}
+.navbar-brand{
+    margin-left: 3%;
+}
+.navbar-brand img{
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+.navbar-brand span{
+    font-size: 20px;
+    font-weight: normal;
+    font-family: sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+}
+.nav-item a{
+    font-size: 17px;
+}
+.navbar .main-nav{
+    gap: 15px;
+    margin-right: 1%;
+}
+.registration-form{
+    margin-top: 3%;
+}
+.registration-form input{
+    outline: none;
+    background: transparent;
+    border: 1px solid black;
+    width: 88%;
+    margin-left: 5%;
+}
+.registration-form label{
+    margin-left: 5.5%;
+    font-size: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    color: grey;
+}
+.registration-form input[type=submit]{
+    width: 88%;
+    height: 50px;
+    background-color: #AC2929;
+    color: white;
+    font-size: 16px;
+    font-weight: 200;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+}
+.login-form{
+    margin-top: 3%;
+}
+.login-form input{
+    outline: none;
+    background: transparent;
+    border: 1px solid black;
+    width: 88%;
+    margin-left: 5%;
+}
+.login-form label{
+    margin-left: 5.5%;
+    font-size: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    color: grey;
+}
+.login-form input[type=submit]{
+    width: 88%;
+    height: 50px;
+    background-color: #AC2929;
+    color: white;
+    font-size: 16px;
+    font-weight: 200;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+}
+.login-form p{
+    margin-left: 5%;
+    margin-top: 3%;
+    font-size: 14px;
+}
+.timer-container{
+    background-color:rgba(182, 33, 33, 0.8);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 66%;
+    border-radius: 8px;
+}
+.timer-box{
+    margin-top: 10%;
+    width: 66%;
+    height: 230px;
+}
+.timer-box .fa-cog{
+    color: white;
+    object-fit: cover;
+    margin-top: 8%;
+    font-size: 30px;
+}
+.timer-box .fa-window-maximize{
+    color: grey;
+    object-fit: cover;
+    margin-top: 8%;
+    font-size: 30px;
+}
+.timer-button{
+    margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-left: 40%;
+}
+.timer-button button{
+    width: 300px;
+    height: 40px;
+    color: white;
+    border: 1px solid white;
+    background-color: transparent;
+    font-size: 14px;
+    border-radius: 5%;
+    outline: none;
+}
+.timer-button button:hover{
+    background-color: #CB2A3A;
+    color: white;
+    transition: 0.5s ease;
+}
+.time{
+    margin-left: 32%;
+}
+.time span{
+    font-size: 80px;
+    letter-spacing: 5px;
+    color: white;
+    font-weight: lighter;
+    font-family: sans-serif;
+}
+.time button{
+    width: 100px;
+    height: 30px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    gap: 8px;
+}
+
+
+  
+  
+  
+  
+  
+  
