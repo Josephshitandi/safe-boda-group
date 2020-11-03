@@ -1,35 +1,43 @@
 {% extends 'base.html'%}
 {% import 'bootstrap/wtf.html' as wtf%}
+{% block styles%}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock %}
+
 
 {% block content %}
-<div class="container-fluid" style="padding: 0; margin: 0;">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/">
-            <img src="/static/images/pomo-lg.png" alt="logo">
-            <span>Pomodoro-clone</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2"> </div>
-            <div class="col-md-8 login-form">
-                <!--Flash message -->
-                {% for message in get_flashed_messages() %}
-                <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ message }}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 pt-3">
+            <div class="card" style="position: relative">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Quote of the day..</h2>
+                    </div>
                 </div>
-                {% endfor %}
-                <!-- Login form -->
-                {{wtf.quick_form(login_form)}}
-                <p> Don't have an account? <a href="{{url_for('auth.register')}}">Sign up here</a></p>
+                <div class="card-body">
+                    <h2 class="quoted-author">{{ quote.author }}</h2>
+                    <p class="quoted-quote">{{ quote.quote }}</p>
+                </div>
             </div>
-            <div clas="col-md-2"> </div>
         </div>
+        <div class="col-md-8">
+            <!--Flash message -->
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+            {% endfor %}
+            <!-- Login form -->
+            {{wtf.quick_form(login_form)}}
+            <p> Don't have an account? <a href="{{url_for('auth.register')}}">Sign up here</a></p>
+        </div>
+
+        </div>
+    </div>
+    <div class="row">
     </div>
 </div>
 
