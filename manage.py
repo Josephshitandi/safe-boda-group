@@ -4,7 +4,7 @@ from app.models import User,Role
 from  flask_migrate import Migrate, MigrateCommand
 
 # Creating app instance
-app = create_app('production')
+app = create_app('development')
 
 manager = Manager(app)
 manager.add_command('server',Server)
@@ -20,7 +20,7 @@ def test():
 
 @manager.shell
 def make_shell_context():
-    return dict(app = app,db = db,User = User,Role = Role)
+    return dict(app = app,db = db,Rider = Rider,Role = Role)
 
 migrate = Migrate(app,db)
 manager.add_command('db',MigrateCommand)
