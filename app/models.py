@@ -1,3 +1,15 @@
+from . import db
+from werkzeug.security import generate_password_hash,check_password_hash
+from flask_login import UserMixin
+from . import login_manager
+from datetime import datetime
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
 class Book(db.Model):
     __tablename__ = 'bookings'
 
@@ -6,6 +18,7 @@ class Book(db.Model):
     first_point = db.Column(db.String(255), index=True)
     second_point = db.Column(db.String(255), index=True)
     payment = db.Column(db.String(255), index=True)
+    mobile = db.Column(db.Integer(255), index=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     rider_id = db.Column(db.Integer, db.ForeignKey('riders.id'), nullable=False)
 

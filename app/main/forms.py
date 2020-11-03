@@ -8,8 +8,8 @@ class UpdateProfile(FlaskForm):
     submit = SubmitField('Submit')
     
 class BookForm(FlaskForm):
-    firstPoint = StringField('From')
-    secondPoint = StringField('To')
+    first_point = StringField('From')
+    second_point = StringField('To')
     mobile = IntegerField('Mobile number')
     payment = SelectField(u'Payment Method', choices=[('Cash', 'Cash'), ('Mpesa', 'Mpesa'),('Bank', 'Bank')])
     submit = SubmitField('Submit')
