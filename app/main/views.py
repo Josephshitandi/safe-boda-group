@@ -18,11 +18,13 @@ def new_booking():
     form = BookForm()
 
     if form.validate_on_submit():
-        booking= form.description.data
-        title=form.booking_title.data
+        first_point = form.first_point.data
+        second_point = form.second_point.data
+        mobile = form.mobile.data
+        payment = form.payment.data
 
         # Updated booking instance
-        new_booking = Book(booking_title=title,description= booking,user_id=current_user.id)
+        new_booking = Book(first_point=first_point,second_point= second_point,mobile = mobile,payment = payment,user_id=current_user.id)
 
         title='New booking'
 

@@ -14,13 +14,12 @@ class Book(db.Model):
     __tablename__ = 'bookings'
 
     id = db.Column(db.Integer, primary_key=True)
-    rider_name = db.Column(db.String(255), index=True)
     first_point = db.Column(db.String(255), index=True)
     second_point = db.Column(db.String(255), index=True)
     payment = db.Column(db.String(255), index=True)
     mobile = db.Column(db.Integer(255), index=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
-    rider_id = db.Column(db.Integer, db.ForeignKey('riders.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     
 
