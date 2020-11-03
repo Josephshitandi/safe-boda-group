@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,TextAreaField,SubmitField,SelectField
+from wtforms import StringField,TextAreaField,SubmitField,SelectField,IntegerField
 from wtforms.validators import Required
 
 
@@ -8,6 +8,8 @@ class UpdateProfile(FlaskForm):
     submit = SubmitField('Submit')
     
 class BookForm(FlaskForm):
-    opinion_title = StringField('Opinion Title')
-    description = TextAreaField('Opinion')
+    firstPoint = StringField('From')
+    secondPoint = StringField('To')
+    mobile = IntegerField('Mobile number')
+    payment = SelectField(u'Payment Method', choices=[('Cash', 'Cash'), ('Mpesa', 'Mpesa'),('Bank', 'Bank')])
     submit = SubmitField('Submit')
