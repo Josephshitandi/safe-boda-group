@@ -1,0 +1,24 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField
+from wtforms.validators import Required, Email, EqualTo, ValidationError
+
+class RiderForm(FlaskForm):
+    email = StringField('Your Email Address',validators=[Required(),Email()])
+    ridername = StringField('Enter your ridername',validators = [Required()])
+    number_plate = StringField('Your number_plate',validators =[Required()])
+    motor_model = StringField('Your motor_model',validators =[Required()])
+    password = PasswordField('Password',validators = [Required(), EqualTo('password_confirm',message = 'Passwords must match')])
+    password_confirm = PasswordField('Confirm Passwords',validators = [Required()])
+    submit = SubmitField('Upload')
+
+    def validate_email(self,data_field):
+        if User.query.filter_by(email =data_field.data).first():
+            raise ValidationError('There is an account with that email')
+
+    def validate_ridername(self,data_field):
+        if User.query.filter_by(ridername = data_field.data).first():
+            raise ValidationError('That ridername is taken')
+        
+class UpdateProfile(FlaskForm):
+    bio = TextAreaField('Say something about yourself',validators=[Required()])
+    submit = SubmitField('Save')
