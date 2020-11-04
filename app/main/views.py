@@ -1,63 +1,12 @@
-from flask_login import login_required,current_user
+
 from . import main
 from .forms import UpdateProfile,TaskForm,BookForm
-from ..models import User,Task,Rider,Book
+from ..models import User,Rider,Book
 from flask import render_template,request,redirect,url_for,abort
-from .forms import UpdateProfile
 from ..request import get_quote
+from flask_login import login_required,current_user
 from .. import db,photos
 import markdown2
-
-@main.route('/rider/<name>')
-def profile2(name):
-    rider = rider.query.filter_by(ridername = name).first()
-    rider_id = current_rider._get_current_object().id
-    if rider is None:
-        abort(404)
-
-    return render_template("profile/profile2.html", rider = rider)
-
-
-
-@main.route('/rider/<name>/updateprofile', methods = ['POST','GET'])
-@login_required
-def updateprofile2(name):
-    form = UpdateProfile()
-    rider = Rider.query.filter_by(ridername = name).first()
-    if rider == None:
-        abort(404)
-    if form.validate_on_submit():
-        rider.bio = form.bio.data
-        rider.save_rider()
-        return redirect(url_for('.profile2',name = name))
-    return render_template('profile/update2.html',form =form)
-
-
-
-@main.route('/rider/<name>/update/pic',methods= ['POST'])
-@login_required
-def update_pic2(name):
-    rider = Rider.query.filter_by(ridername = name).first()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        rider.profile_pic_path = path
-        db.session.commit()
-    return redirect(url_for('main.profile2',name=name))
-
-@main.route('/create_new', methods = ['POST','GET'])
-@login_required
-def new_task():
-    form = TaskForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        post = form.post.data
-        user_id = current_user
-        new_task_object = Task(post=post,user_id=current_user._get_current_object().id,title=title)
-        new_task_object.save_p()
-        return redirect(url_for('main.index'))
-        
-    return render_template('create_task.html', form = form)		
 
 
 @main.route('/')
@@ -74,23 +23,59 @@ def index():
 
     return render_template('index.html', title = title,content = content,quote = quote)
 
+# @main.route('/rider/<name>')
+# def profile2(name):
+#     rider = rider.query.filter_by(ridername = name).first()
+#     rider_id = current_rider._get_current_object().id
+#     if rider is None:
+#         abort(404)
+
+#     return render_template("profile/profile2.html", rider = rider)
+
+
+
+# @main.route('/rider/<name>/updateprofile', methods = ['POST','GET'])
+# @login_required
+# def updateprofile2(name):
+#     form = UpdateProfile()
+#     rider = Rider.query.filter_by(ridername = name).first()
+#     if rider == None:
+#         abort(404)
+#     if form.validate_on_submit():
+#         rider.bio = form.bio.data
+#         rider.save_rider()
+#         return redirect(url_for('.profile2',name = name))
+#     return render_template('profile/update2.html',form =form)
+
+
+
+# @main.route('/rider/<name>/update/pic',methods= ['POST'])
+# @login_required
+# def update_pic2(name):
+#     rider = Rider.query.filter_by(ridername = name).first()
+#     if 'photo' in request.files:
+#         filename = photos.save(request.files['photo'])
+#         path = f'photos/{filename}'
+#         rider.profile_pic_path = path
+#         db.session.commit()
+#     return redirect(url_for('main.profile2',name=name))	
+
 
 
 @main.route('/user/<uname>')
 def profile(uname):
-    quote = get_quote()
     user = User.query.filter_by(username = uname).first()
+    print('user name', user)
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user, quote=quote)
+    return render_template("profile/profile.html", user = user)
 
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
 def update_profile(uname):
-    quote = get_quote()
     user = User.query.filter_by(username = uname).first()
     if user is None:
         abort(404)
@@ -105,12 +90,11 @@ def update_profile(uname):
 
         return redirect(url_for('.profile',uname=user.username))
 
-    return render_template('profile/update.html',form =form, quote=quote)
+    return render_template('profile/update.html',form =form)
 
 @main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
 def update_pic(uname):
-    quote = get_quote()
     user = User.query.filter_by(username = uname).first()
     if 'photo' in request.files:
         filename = photos.save(request.files['photo'])
@@ -119,11 +103,7 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-
-
-
 @main.route('/booking/new_booking', methods = ['GET','POST'])
-@login_required
 def new_booking():
     quote = get_quote()
 
@@ -135,7 +115,7 @@ def new_booking():
         mobile = form.mobile.data
         payment = form.payment.data
 
-        # Updated booking instance
+        
         new_booking = Book(first_point=first_point,second_point= second_point,mobile = mobile,payment = payment,user_id=current_user.id)
 
         title='New booking'

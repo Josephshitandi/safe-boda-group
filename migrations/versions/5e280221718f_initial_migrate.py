@@ -1,8 +1,8 @@
-"""Initial Migration
+"""Initial migrate
 
-Revision ID: e2a2ce5ca98a
+Revision ID: 5e280221718f
 Revises: 
-Create Date: 2020-11-04 00:44:49.771239
+Create Date: 2020-11-04 22:39:08.416926
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e2a2ce5ca98a'
+revision = '5e280221718f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,22 @@ def upgrade():
     sa.Column('name', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('riders',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ridername', sa.String(length=255), nullable=True),
+    sa.Column('email', sa.String(length=255), nullable=True),
+    sa.Column('role_id', sa.Integer(), nullable=True),
+    sa.Column('bio', sa.String(length=255), nullable=True),
+    sa.Column('profile_pic_path', sa.String(), nullable=True),
+    sa.Column('pass_secure', sa.String(length=255), nullable=True),
+    sa.Column('number_plate', sa.String(length=255), nullable=True),
+    sa.Column('motorbike_model', sa.String(length=255), nullable=True),
+    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_riders_email'), 'riders', ['email'], unique=True)
+    op.create_index(op.f('ix_riders_number_plate'), 'riders', ['number_plate'], unique=True)
+    op.create_index(op.f('ix_riders_ridername'), 'riders', ['ridername'], unique=False)
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=255), nullable=True),
@@ -64,5 +80,9 @@ def downgrade():
     op.drop_index(op.f('ix_users_username'), table_name='users')
     op.drop_index(op.f('ix_users_email'), table_name='users')
     op.drop_table('users')
+    op.drop_index(op.f('ix_riders_ridername'), table_name='riders')
+    op.drop_index(op.f('ix_riders_number_plate'), table_name='riders')
+    op.drop_index(op.f('ix_riders_email'), table_name='riders')
+    op.drop_table('riders')
     op.drop_table('roles')
     # ### end Alembic commands ###

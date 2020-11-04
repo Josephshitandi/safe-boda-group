@@ -15,7 +15,7 @@ class Rider(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     ridername = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    # role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(255))
@@ -46,61 +46,31 @@ class Rider(UserMixin,db.Model):
     def __repr__(self):
         return f'Rider {self.ridername}'
 
-class User(UserMixin, db.Model):
-    '''
-    Model class/db table for the user
-    Args:
-        db.Model: Connect our class to the database
-    '''
-    __tablename__  = 'users'
+class User(UserMixin,db.Model):
+    __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(255))
-    email = db.Column(db.String(255), unique = True, index=True)
+    id = db.Column(db.Integer,primary_key = True)
+    username = db.Column(db.String(255),index = True)
+    email = db.Column(db.String(255),unique = True,index = True)
+    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    pass_secure = db.Column(db.String())
-    # task = db.relationship('task', backref='user', lazy='dynamic')
-
+    pass_secure = db.Column(db.String(255))
+    
     @property
     def password(self):
-        '''
-        Define property object to make limit access to pass_secure
-        '''
         raise AttributeError('You cannot read the password attribute')
 
     @password.setter
-    def password(self,password):
+    def password(self, password):
         self.pass_secure = generate_password_hash(password)
+
 
     def verify_password(self,password):
         return check_password_hash(self.pass_secure,password)
-
-    def save_user(self):
-        '''
-        Function to save a user
-        '''
-        db.session.add(self)
-        db.session.commit()
-
+    
     def __repr__(self):
         return f'User {self.username}'
-
-
-class Task(db.Model):
-    __tablename__ = 'task'
-    id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String(255),nullable = False)
-    post = db.Column(db.Text(), nullable = False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
-    def save_p(self):
-        db.session.add(self)
-        db.session.commit()
-
-        
-    def __repr__(self):
-        return f'Task {self.post}'        
 
 class Book(db.Model):
     __tablename__ = 'bookings'
@@ -138,6 +108,7 @@ class Role(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255))
     users = db.relationship('User',backref = 'role',lazy="dynamic")
+    riders = db.relationship('Rider',backref = 'role',lazy="dynamic")
     
 
     def __repr__(self):
