@@ -7,6 +7,7 @@ from .. import db,photos
 
 
 
+
 @main.route('/rider/<name>')
 def profile(name):
     rider = rider.query.filter_by(ridername = name).first()
