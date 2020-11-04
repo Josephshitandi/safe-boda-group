@@ -15,7 +15,7 @@ def profile(name):
     if rider is None:
         abort(404)
 
-    return render_template("profile/profile.html", rider = rider)
+    return render_template("profile/profile2.html", rider = rider)
 
 
 
@@ -30,7 +30,7 @@ def updateprofile(name):
         rider.bio = form.bio.data
         rider.save_rider()
         return redirect(url_for('.profile',name = name))
-    return render_template('profile/update.html',form =form)
+    return render_template('profile/update2.html',form =form)
 
 
 

@@ -16,7 +16,7 @@ def login():
             login_user(rider,form.remember.data)
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invalid ridername or Password')
-    return render_template('auth/login.html', loginform = form)
+    return render_template('auth/login2.html', loginform = form)
 
 
 
@@ -34,4 +34,4 @@ def signup():
         rider.save_rider()
         mail_message("Welcome to Safe-Boda","email/welcome_rider",rider.email,rider=rider)
         return redirect(url_for('auth.login'))
-    return render_template('auth/signup.html', r_form = form)
+    return render_template('auth/signup2.html', r_form = form)
