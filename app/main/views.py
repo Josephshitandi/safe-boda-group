@@ -7,6 +7,20 @@ from flask_login import login_required,current_user
 from .. import db,photos
 import markdown2
 
+@main.route('/create_new', methods = ['POST','GET'])
+@login_required
+def new_task():
+    form = TaskForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        post = form.post.data
+        user_id = current_user
+        new_task_object = Task(post=post,user_id=current_user._get_current_object().id,title=title)
+        new_task_object.save_p()
+        return redirect(url_for('main.index'))
+        
+    return render_template('create_task.html', form = form)		
+
 
 @main.route('/')
 def index():
@@ -150,3 +164,10 @@ def new_comment(booking_id):
         return redirect(url_for('main.index'))
     title='New comment'
     return render_template('new_comment.html',title=title,comment_form = form,booking_id=booking_id,quote=quote)
+
+@main.route('/aboutus')
+def aboutus():
+
+    return render_template('aboutus.html')
+
+
