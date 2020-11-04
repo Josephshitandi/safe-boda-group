@@ -9,7 +9,6 @@ from ..request import get_quote
 from .. import db,photos
 import markdown2
 
-
 @main.route('/create_new', methods = ['POST','GET'])
 @login_required
 def new_task():
@@ -116,3 +115,8 @@ def new_booking():
         return redirect(url_for('main.new_booking'))
 
     return render_template('booking.html',form= form, quote=quote)
+@main.route('/aboutus')
+def aboutus():
+
+    return render_template('aboutus.html')
+
