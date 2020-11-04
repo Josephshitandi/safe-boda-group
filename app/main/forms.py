@@ -5,10 +5,9 @@ from wtforms import StringField, TextAreaField, SubmitField, SelectField, Passwo
 from wtforms.validators import Required, Email, EqualTo, ValidationError
 
 
-class CommentForm (FlaskForm):
-    text = TextAreaField('Leave a comment',validators=[Required()])
-    date = DateField
-    submit = SubmitField('Submit')
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment')
+    submit = SubmitField('Post a comment')
 
 class RiderForm(FlaskForm):
     email = StringField('Your Email Address',validators=[Required(),Email()])

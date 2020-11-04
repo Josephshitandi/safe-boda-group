@@ -8,39 +8,11 @@ from .. import db,photos
 import markdown2
 
 
-
-
-
-@main.route('/create_new', methods = ['POST','GET'])
-def post_comment(id):
-    ''' 
-    function to post comments 
-    '''
-    form = CommentForm()
-    title = 'post comment'
-    comment = Comment.query.filter_by().first()
-
-    if comment is None:
-         abort(404)
-
-    if form.validate_on_submit():
-        opinion = form.opinion.data
-        new_comment = Comments(opinion=opinion, user_id=current_user.id, comment_id=comment.id)
-        new_comment.save_comment()
-        return redirect(url_for('.comment'))
-
-    return render_template('new_comment.html', comment_form=form, title=title,Comments=comment)
-    
-
-
 @main.route('/')
 def index():
-
     '''
     View root page function that returns the index page and its data
     '''
-
-
     title = 'Home - Safe Boda  website'
     content = "WELCOME TO SAFE BODA WEBSITE"
     quote = get_quote()
@@ -149,3 +121,32 @@ def new_booking():
         return redirect(url_for('main.new_booking'))
 
     return render_template('booking.html',form= form, quote=quote)
+
+@main.route('/comments/<id>')
+@login_required
+def comment(id):
+    '''
+    function to return the comments
+    '''
+    quote = get_quote()
+    comm =Comment.get_comments(id)
+    title = 'comments'
+    return render_template('comments.html',comment = comm,title = title,quote=quote)
+
+@main.route('/new_comment/<int:booking_id>', methods = ['GET','POST'])
+@login_required
+def new_comment(booking_id):
+    quote = get_quote()
+    bookings = Book.query.filter_by(id = booking_id).first()
+    form = CommentForm()
+
+    if form.validate_on_submit():
+        comment = form.comment.data
+
+        new_comment = Comment(comment=comment,user_id=current_user.id, booking_id=booking_id)
+
+        new_comment.save_comment()
+
+        return redirect(url_for('main.index'))
+    title='New comment'
+    return render_template('new_comment.html',title=title,comment_form = form,booking_id=booking_id,quote=quote)

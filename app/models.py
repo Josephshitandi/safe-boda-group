@@ -4,16 +4,6 @@ from flask_login import UserMixin
 from . import login_manager
 from datetime import datetime
 
-class Comment (db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.column(db.String(1000))
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-
-@classmethod
-def get_comments(cls):
-    comments = Comment.query.filter_by().all()
-    return comments
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -67,6 +57,7 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(255))
+    comments = db.relationship('Comment', backref='username', lazy=True)
     
     @property
     def password(self):
@@ -124,4 +115,27 @@ class Role(db.Model):
 
     def __repr__(self):
         return f'User {self.name}'
+class Comment(db.Model):
+    __tablename__ = 'comments'
 
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.Text())
+    booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls, booking_id):
+        comments = Comment.query.filter_by(booking_id=booking_id).all()
+        return comments
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'Comments: {self.comment}'
