@@ -83,7 +83,7 @@ class Book(db.Model):
     payment = db.Column(db.String(255), index=True)
     mobile = db.Column(db.String(255), index=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     
 
