@@ -1,20 +1,22 @@
-# SHITANDI BLOG WEBSITE
+# SAFE BODA WEBSITE
 
 <table>
 <tr>
 <td>
-This is Joseph Shitandi's blog website where one can create and share their opinions. One can also read and comment on those opinions. Anyone interested can create account, login in, add opinion or leave a comment.
+A motorbike application where one can sign up, log in, make booking of services. The user is able to leave a comment or a review of the service offered.
 </td>
 </tr>
 </table>
 
 ## Demo
-Here is a working live demo : https://shitandi-blog-website.herokuapp.com/
+Here is a working live demo : https://safe-boda-group.herokuapp.com/
 
-Here is my figma link: https://www.figma.com/file/iMmqvp5H5MRLZsPL7v5Isu/shitandi-blog-website
+Here is our figma link: https://www.figma.com/file/F5ty4tvmi7ZeswI0adBHJ0/Safe_boda?node-id=3%3A18
+
+Here is ERD link:  https://app.lucidchart.com/invitations/accept/962f0ef9-ff21-45b9-b6a7-a2c6733e8566
 
 ## Mobile support
-The Blog-website is compatible with devices of all sizes and all OS's, and consistent improvements are being made.
+The safe-boda website is compatible with devices of all sizes and all OS's, and consistent improvements are being made.
 
 ### Development
 
@@ -37,9 +39,13 @@ To fix a bug or enhance an existing module, follow these steps:
 
 ## Author
 - Joseph Shitandi Otaaba
+- Fred Atei
+- Sophie Olondie
+- Rowena Rono
+- Denis Mutai
 
 ## License 
-[MIT](https://github.com/Josephshitandi/Blog-website/blob/master/LICENSE.md)
+[MIT](https://github.com/Josephshitandi/safe-boda-group/blob/master/LICENSE.md)
 
  © [Joseph Shitandi Otaaba](https://github.com/Josephshitandi)
 
