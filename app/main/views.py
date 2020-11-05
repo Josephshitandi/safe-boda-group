@@ -1,5 +1,5 @@
 from . import main
-from .forms import UpdateProfile,TaskForm,BookForm
+from .forms import UpdateProfile,TaskForm,BookForm,CommentForm
 from ..models import User,Rider,Book,Comment
 from flask import render_template,request,redirect,url_for,abort
 from ..request import get_quote
@@ -10,6 +10,7 @@ import markdown2
 @main.route('/create_new', methods = ['POST','GET'])
 @login_required
 def new_task():
+    quote = get_quote()
     form = TaskForm()
     if form.validate_on_submit():
         title = form.title.data
@@ -33,59 +34,62 @@ def index():
 
     return render_template('index.html', title = title,content = content,quote = quote)
 
-@main.route('/rider/<name>')
-def profile2(name):
+@main.route('/rider/<uname>')
+def profile2(uname):
+    quote = get_quote()
     rider = rider.query.filter_by(ridername = name).first()
     rider_id = current_rider._get_current_object().id
     if rider is None:
         abort(404)
 
-    return render_template("profile/profile2.html", rider = rider)
+    return render_template("profile/profile2.html", rider = rider,quote=quote)
 
 
 
-@main.route('/rider/<name>/updateprofile', methods = ['POST','GET'])
+@main.route('/rider/<uname>/updateprofile', methods = ['POST','GET'])
 @login_required
-def updateprofile2(name):
+def updateprofile2(uname):
+    quote = get_quote()
     form = UpdateProfile()
-    rider = Rider.query.filter_by(ridername = name).first()
+    rider = Rider.query.filter_by(ridername = uname).first()
     if rider == None:
         abort(404)
     if form.validate_on_submit():
         rider.bio = form.bio.data
         rider.save_rider()
-        return redirect(url_for('.profile2',name = name))
-    return render_template('profile/update2.html',form =form)
+        return redirect(url_for('.profile2',uname = uname))
+    return render_template('profile/update2.html',form =form,quote=quote)
 
 
 
-@main.route('/rider/<name>/update/pic',methods= ['POST'])
+@main.route('/rider/<uname>/update/pic',methods= ['POST'])
 @login_required
-def update_pic2(name):
-    rider = Rider.query.filter_by(ridername = name).first()
+def update_pic2(uname):
+    rider = Rider.query.filter_by(ridername = uname).first()
     if 'photo' in request.files:
         filename = photos.save(request.files['photo'])
         path = f'photos/{filename}'
         rider.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for('main.profile2',name=name))	
+    return redirect(url_for('main.profile2',uname=uname))	
 
 
 
 @main.route('/user/<uname>')
 def profile(uname):
+    quote = get_quote()
     user = User.query.filter_by(username = uname).first()
-    print('user name', user)
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)
+    return render_template("profile/profile.html", user = user,quote=quote)
 
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
 def update_profile(uname):
+    quote = get_quote()
     user = User.query.filter_by(username = uname).first()
     if user is None:
         abort(404)
@@ -100,7 +104,7 @@ def update_profile(uname):
 
         return redirect(url_for('.profile',uname=user.username))
 
-    return render_template('profile/update.html',form =form)
+    return render_template('profile/update.html',form =form,quote=quote)
 
 @main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
@@ -132,7 +136,7 @@ def new_booking():
 
         new_booking.save_booking()
 
-        return redirect(url_for('main.new_booking'))
+        return redirect(url_for('main.thankyou'))
 
     return render_template('booking.html',form= form, quote=quote)
 
@@ -151,23 +155,37 @@ def comment(id):
 @login_required
 def new_comment():
     quote = get_quote()
-    bookings = Book.query.filter_by(id = booking_id).first()
+    # bookings = Book.query.filter_by(id = booking_id).first()
     form = CommentForm()
+    comments = Comment.query.all()
 
     if form.validate_on_submit():
         comment = form.comment.data
 
-        new_comment = Comment(comment=comment,user_id=current_user.id, booking_id=booking_id)
+        new_comment = Comment(comment=comment,user_id=current_user.id)
 
         new_comment.save_comment()
 
         return redirect(url_for('main.index'))
     title='New comment'
-    return render_template('new_comment.html',title=title,comment_form = form,booking_id=booking_id,quote=quote)
+    return render_template('new_comment.html',title=title,comment_form = form,quote=quote,comments=comments)
 
 @main.route('/aboutus')
 def aboutus():
 
     return render_template('aboutus.html')
+
+@main.route('/booking/thankyou')
+def thankyou():
+    quote = get_quote()
+
+    return render_template('thankyou.html',quote=quote)
+
+@main.route('/rider/all', methods=['GET', 'POST'])
+@login_required
+def riders():
+    riders = Rider.query.all()
+    quote = get_quote()
+    return render_template('riders.html', riders=riders, quote=quote)
 
 

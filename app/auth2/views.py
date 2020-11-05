@@ -8,7 +8,7 @@ from ..email import mail_message
 
 
 @auth.route('/login', methods = ['GET','POST'])
-def login2():
+def log_in():
     form = LoginForm()
     if form.validate_on_submit():
         rider = Rider.query.filter_by(ridername = form.ridername.data).first()
@@ -30,8 +30,8 @@ def logout():
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
-        rider = Rider(email = form.email.data, ridername = form.ridername.data, password = form.password.data)
+        rider = Rider(email = form.email.data, ridername = form.ridername.data,number_plate = form.number_plate.data,motorbike_model = form.motorbike_model.data, password = form.password.data)
         rider.save_rider()
-        mail_message("Welcome to Safe-Boda","email/welcome_rider",rider.email,rider=rider)
-        return redirect(url_for('auth.login'))
+        # mail_message("Welcome to Safe-Boda","email/welcome_rider",rider.email,rider=rider)
+        return redirect(url_for('auth2.log_in'))
     return render_template('auth/signup2.html', r_form = form)

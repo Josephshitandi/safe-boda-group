@@ -33,10 +33,22 @@
                 <!-- Login form -->
                 {{wtf.quick_form(login_form)}}
                 <p> Don't have an account? <a href="{{url_for('auth.register')}}">Sign up here</a></p>
+                <br><br>
+                <p style="font-weight: bold;">Click the button below to register as a rider</p>
+                <button><a href="{{url_for('auth2.signup')}}"> Register as a Rider</a></button>
             </div>
 
         </div>
     </div>
 </div>
+<br>
+  <footer class="footer mt-4">
+    <div class="social-icons">
+      <i class="fa fa-2x fa-facebook"></i>
+      <i class="fa fa-2x fa-twitter"></i>
+      <i class="fa fa-2x fa-instagram"></i>
+    </div>
+    <p class="text-center pt-2">Copyright &copy; 2020 Design by safe boda group</p>
+  </footer>
 
 {% endblock%}

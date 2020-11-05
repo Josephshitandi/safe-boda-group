@@ -37,9 +37,9 @@ class TaskForm(FlaskForm):
     
     
 class BookForm(FlaskForm):
-    first_point = StringField('From')
-    second_point = StringField('To')
-    mobile = IntegerField('Mobile number')
+    first_point = StringField('Enter your current Location')
+    second_point = StringField('Enter your Destination point')
+    mobile = IntegerField('Enter your Mobile number')
     payment = SelectField(u'Payment Method', choices=[('Cash', 'Cash'), ('Mpesa', 'Mpesa'),('Bank', 'Bank')])
     submit = SubmitField('Submit')
 

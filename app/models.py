@@ -7,7 +7,11 @@ from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Rider.query.get(int(user_id))
+    return User.query.get(int(user_id))
+
+# @login_manager.user_loader
+# def load_user(rider_id):
+#     return Rider.query.get(int(rider_id))
 
 
 class Rider(UserMixin,db.Model):
@@ -21,6 +25,7 @@ class Rider(UserMixin,db.Model):
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(255))
     number_plate = db.Column(db.String(255),unique = True,index = True)
+    mobile_numbe = db.Column(db.Integer(),unique = True,index = True)
     motorbike_model = db.Column(db.String(255))
     
 
@@ -81,7 +86,7 @@ class Book(db.Model):
     first_point = db.Column(db.String(255), index=True)
     second_point = db.Column(db.String(255), index=True)
     payment = db.Column(db.String(255), index=True)
-    mobile = db.Column(db.String(255), index=True)
+    mobile = db.Column(db.Integer(), index=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
