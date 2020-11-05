@@ -114,7 +114,9 @@ body{
     background-color: bisque;
 }
 
-  
+.image img{
+    height: 200px;
+}
   
   
   
