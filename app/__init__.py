@@ -56,29 +56,3 @@ def create_app(config_name):
 
 
 
-=======
-
-    # Will add the views and forms
-
-    mail.init_app(app)
-    simple.init_app(app)
-
-    # Will add the views and forms
-
-     # Registering the blueprint
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
-    
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint,url_prefix = '/authenticate')
-
-    
-    # configure UploadSet
-    configure_uploads(app,photos)
-
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint,url_prefix = '/authenticate')
-    
-    return app
->>>>>>> dev
-
