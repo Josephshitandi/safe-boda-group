@@ -10,7 +10,7 @@ from flask_simplemde import SimpleMDE
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
-login_manager.login_view = 'auth2.log_in'
+# login_manager.login_view = 'auth2.log_in'
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
